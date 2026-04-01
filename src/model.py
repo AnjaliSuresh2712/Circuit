@@ -13,7 +13,7 @@ def load_gpt2_small():
     """
     model_name = "gpt2-small"
     model = HookedTransformer.from_pretrained(model_name)
-    # TransformerLens model names (e.g. "gpt2-small") don't always match Hugging Face repo ids.
+    # TransformerLens model names (like gpt2-small) don't always match Hugging Face repo ids.
     # The tokenizer is usually already attached to the loaded model.
     tokenizer = getattr(model, "tokenizer", None)
     if tokenizer is None:
@@ -37,23 +37,28 @@ def get_verb_probabilities(model, tokenizer, sentence_prefix, verb1, verb2):
     input_ids = tokenizer.encode(sentence_prefix, return_tensors='pt')
     
     # Get the model's output logits for the next token.
-    # HookedTransformer returns a Tensor of logits (not an object with `.logits`).
+    # Makes sure the input ids are on the same device as the model (e.g., CPU or GPU)
     device = getattr(model, "device", None) or getattr(getattr(model, "cfg", None), "device", None)
     if device is not None:
         input_ids = input_ids.to(device)
+    # not training, so we don't need gradients just predicting.
+    # This also speeds up inference and reduces memory usage.
     with torch.no_grad():
         outputs = model(input_ids)
+        # Depending on the model's output structure, we may need to access the logits differently.
+        # this says either way get the output logits, if the model's output has a 'logits' attribute, use that; otherwise, assume the output itself is the logits.
         all_logits = outputs.logits if hasattr(outputs, "logits") else outputs
         logits = all_logits[:, -1, :]  # scores for the next token
     
     # Get the token IDs for the two verb choices
-    verb1_id = tokenizer.encode(verb1, add_special_tokens=False)[0]
-    verb2_id = tokenizer.encode(verb2, add_special_tokens=False)[0]
+    verb1_id = tokenizer.encode(" " + verb1, add_special_tokens=False)[0]
+    verb2_id = tokenizer.encode(" " + verb2, add_special_tokens=False)[0]
     
     # Calculate probabilities using softmax
+    # In simple terms, softmax takes the raw scores (logits) and converts them into probabilities that sum to 1.
     probabilities = torch.softmax(logits, dim=-1)
     
-    # converts those scores into probabilities
+    # convert the probabilities for the two verbs to Python floats and return them in a dictionary
     verb1_prob = probabilities[0, verb1_id].item()
     verb2_prob = probabilities[0, verb2_id].item()
     
@@ -66,8 +71,13 @@ def main():
     verb1 = "sat"
     verb2 = "jumped"
         
-    probabilities = get_verb_probabilities(model, tokenizer, sentence_prefix, verb1, verb2)
-    print(probabilities)
+    probabilities_cat = get_verb_probabilities(model, tokenizer, sentence_prefix, verb1, verb2)
+    probabilities_singular = get_verb_probabilities(model, tokenizer, "The key to the cabinet", "is", "are")
+    probabilities_plural = get_verb_probabilities(model, tokenizer, "The key to the cabinets", "is", "are")
+    print("Singular:", probabilities_singular)
+    print("Plural:", probabilities_plural)
+    print(probabilities_cat)
+    
 
 if __name__ == "__main__":
     main()
