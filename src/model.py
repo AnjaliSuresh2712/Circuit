@@ -64,19 +64,13 @@ def get_verb_probabilities(model, tokenizer, sentence_prefix, verb1, verb2):
     
     return {verb1: verb1_prob, verb2: verb2_prob}
 
-# Example usage
+# Example usage call run_verb_probability_analysis with the CSV path
 def main():
+    from stimuli import run_verb_probability_analysis
     model, tokenizer = load_gpt2_small()
-    sentence_prefix = "The cat"
-    verb1 = "sat"
-    verb2 = "jumped"
-        
-    probabilities_cat = get_verb_probabilities(model, tokenizer, sentence_prefix, verb1, verb2)
-    probabilities_singular = get_verb_probabilities(model, tokenizer, "The key to the cabinet", "is", "are")
-    probabilities_plural = get_verb_probabilities(model, tokenizer, "The key to the cabinets", "is", "are")
-    print("Singular:", probabilities_singular)
-    print("Plural:", probabilities_plural)
-    print(probabilities_cat)
+    csv_file = "../data/stimuli/agreement_attraction.csv"
+    results_df = run_verb_probability_analysis(model, tokenizer, csv_file)
+    print(results_df)
     
 
 if __name__ == "__main__":

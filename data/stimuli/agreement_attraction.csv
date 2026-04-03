@@ -1,0 +1,26 @@
+item_id,subject,attractor_sg,attractor_pl,preposition,verb_correct,verb_incorrect,prefix_baseline,prefix_attractor
+1,key,cabinet,cabinets,to the,is,are,The key to the cabinet,The key to the cabinets
+2,girl,boy,boys,near the,was,were,The girl near the boy,The girl near the boys
+3,author,book,books,of the,was,were,The author of the book,The author of the books
+4,bridge,river,rivers,over the,was,were,The bridge over the river,The bridge over the rivers
+5,lamp,table,tables,on the,is,are,The lamp on the table,The lamp on the tables
+6,manager,department,departments,of the,was,were,The manager of the department,The manager of the departments
+7,cat,pillow,pillows,on the,was,were,The cat on the pillow,The cat on the pillows
+8,painting,wall,walls,on the,was,were,The painting on the wall,The painting on the walls
+9,door,room,rooms,to the,was,were,The door to the room,The door to the rooms
+10,tree,garden,gardens,in the,is,are,The tree in the garden,The tree in the gardens
+11,price,ticket,tickets,of the,was,were,The price of the ticket,The price of the tickets
+12,lid,jar,jars,on the,was,were,The lid on the jar,The lid on the jars
+13,driver,bus,buses,of the,was,were,The driver of the bus,The driver of the buses
+14,shadow,building,buildings,of the,was,were,The shadow of the building,The shadow of the buildings
+15,smell,flower,flowers,of the,was,were,The smell of the flower,The smell of the flowers
+16,letter,envelope,envelopes,in the,was,were,The letter in the envelope,The letter in the envelopes
+17,student,teacher,teachers,near the,was,were,The student near the teacher,The student near the teachers
+18,photo,album,albums,in the,was,were,The photo in the album,The photo in the albums
+19,crack,window,windows,in the,was,were,The crack in the window,The crack in the windows
+20,label,bottle,bottles,on the,was,were,The label on the bottle,The label on the bottles
+21,roof,house,houses,of the,was,were,The roof of the house,The roof of the houses
+22,flavor,cake,cakes,of the,was,were,The flavor of the cake,The flavor of the cakes
+23,handle,drawer,drawers,on the,was,were,The handle on the drawer,The handle on the drawers
+24,sign,shop,shops,above the,was,were,The sign above the shop,The sign above the shops
+25,path,mountain,mountains,through the,was,were,The path through the mountain,The path through the mountains
